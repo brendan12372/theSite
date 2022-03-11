@@ -1,0 +1,8 @@
+{{context}}
+<p>{{ first.symbol}} {{first.yearReturn}}</p>
+<p>{{ second.symbol}} {{second.yearReturn}}</p>
+<p>{{ third.symbol}} {{third.yearReturn}}</p>
+<p>{{ fourth.symbol}} {{fourth.yearReturn}}</p>
+{% for it in context.yearReturn %}
+<h1>{{it}}</h1>
+{% endfor %}
