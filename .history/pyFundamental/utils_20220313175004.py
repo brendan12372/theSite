@@ -160,6 +160,7 @@ class Stock:
         self.ticker = yf.Ticker(symbol)
         self.info = self.ticker.info
         self.sector = self.info['sector']
+        self.totalAssets=self.info['totalAssets']
         try:
             self.sectorDir = os.path.join(dataDir, self.sector)
             os.mkdir(self.sectorDir)

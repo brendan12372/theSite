@@ -40,9 +40,7 @@ class Stock(models.Model):
     grossMargins = models.FloatField(default=0,blank=True, null=True)
     profitMargins = models.FloatField(default=0,blank=True, null=True)
     grossProfits=models.IntegerField(default=0, blank=True, null=True)
-    bookValue=models.FloatField(default=0, blank=True, null=True)
-    forwardEPS=models.FloatField(default=0, blank=True, null=True)
-    trailingEPS=models.FloatField(default=0, blank=True, null=True)
+    bookValue=models.IntegerField(default=0, blank=True, null=True)
 
 
 
@@ -54,11 +52,11 @@ class Stock(models.Model):
     marketCap = models.IntegerField(default=0, blank=True, null=True)
     payoutRatio = models.FloatField(blank=True, null=True)
     fullTimeEmployees = models.IntegerField(blank=True, null=True)
-    trailingEPS = models.FloatField(default=0, blank=True, null=True)
-    forwardEPS = models.FloatField(default=0, blank=True, null=True)
-    forwardPE = models.FloatField(default=0, blank=True, null=True)
-    PriceToBook = models.FloatField(default=0, blank=True, null=True)
-    returnOnEquity= models.FloatField(default=0, blank=True, null=True)
+    teps = models.FloatField(default=0, blank=True, null=True)
+    feps = models.FloatField(default=0, blank=True, null=True)
+    fpe = models.FloatField(default=0, blank=True, null=True)
+    ptb = models.FloatField(default=0, blank=True, null=True)
+    roe = models.FloatField(default=0, blank=True, null=True)
     currentRatio = models.FloatField(default=0, blank=True, null=True)
     debtEquityRatio = models.FloatField(default=0, blank=True, null=True)
     insiders = models.FloatField(default=0,null=True,blank=True)
@@ -128,16 +126,16 @@ class Stock(models.Model):
         self.enterpriseToEbitda = round(S.info['enterpriseToEbitda'],2)
         self.enterpriseToRevenue = round(S.info['enterpriseToRevenue'],2)
         self.enterpriseValue = round(S.info['enterpriseValue'],2)
-        self.trailingEPS = round(S.teps,2)
+        self.teps = round(S.teps,2)
         self.payoutRatio = round(S.info['payoutRatio'],2)
         try:
-            self.forwardEPS = S.feps
+            self.feps = S.feps
         except:
-            self.forwardEPS=0
+            self.feps=0
         try:
-            self.forwardPE = S.fpe
+            self.fpe = S.fpe
         except:
-            self.forwardPE=0
+            self.fpe=0
         self.yearReturn=S.yearReturn
         self.pegRatio=round(S.pegRatio,2)
         self.marketCap=S.marketCap
@@ -223,16 +221,16 @@ class Stock(models.Model):
         except :
             self.fiveYearAvgDividendYield=0
         try:
-            self.sharesPercentSharesOut=S.sharesPercentSharesOut
+            self.sharesPercentSharesOut=S.info["sharesPercentSharesOut"]
         except :
             self.sharesPercentSharesOut=0
 
         try:
-            self.PriceToBook = round(S.ptb,2)
+            self.ptb = round(S.ptb,2)
         except:
             pass
         try:
-            self.returnOnEquity = round(S.roe,2)
+            self.roe = round(S.roe,2)
         except:
             pass
         try:
@@ -293,19 +291,6 @@ class Stock(models.Model):
 
 
 
-            
-        try:
-            self.forwardEPS = S.feps
-        except:
-            self.forwardEPS=None
-            
-            
-        try:
-            self.trailingEPS = S.teps
-        except:
-            self.trailingEPS=None
-            
-            
 
 
 

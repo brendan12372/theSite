@@ -235,7 +235,6 @@ class Stock:
             self.fiveYearAvgDividendYield = self.info['fiveYearAvgDividendYield']
             self.fiftyTwoWeekHigh = round(self.info['fiftyTwoWeekHigh'], 2)
             self.averageVolume = self.info['averageVolume']
-    
             try:
                 self.trailingPE = round(self.info['trailingPE '], 2)
             except:

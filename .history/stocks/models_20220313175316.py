@@ -135,7 +135,7 @@ class Stock(models.Model):
         except:
             self.forwardEPS=0
         try:
-            self.forwardPE = S.fpe
+            self.forwardPE = S.info['forwardPE']
         except:
             self.forwardPE=0
         self.yearReturn=S.yearReturn

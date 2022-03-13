@@ -43,6 +43,7 @@ class Stock(models.Model):
     bookValue=models.FloatField(default=0, blank=True, null=True)
     forwardEPS=models.FloatField(default=0, blank=True, null=True)
     trailingEPS=models.FloatField(default=0, blank=True, null=True)
+    totalAssets=models.FloatField(default=0, blank=True, null=True)
 
 
 
@@ -135,7 +136,7 @@ class Stock(models.Model):
         except:
             self.forwardEPS=0
         try:
-            self.forwardPE = S.fpe
+            self.forwardPE = S.info['forwardPE']
         except:
             self.forwardPE=0
         self.yearReturn=S.yearReturn
@@ -306,6 +307,10 @@ class Stock(models.Model):
             self.trailingEPS=None
             
             
+        try:
+            self.totalAssets = S.totalAssets
+        except:
+            self.totalAssets=0
 
 
 
