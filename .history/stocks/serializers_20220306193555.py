@@ -5,6 +5,7 @@ class StockSerializer(serializers.ModelSerializer):
         s = Stock('appl')
         f = []
         f = s.get_model_fields()
+        print(f)
         fl=[]
         for m in f:
             fl.append(m.name)
