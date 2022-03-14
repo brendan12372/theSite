@@ -1,4 +1,4 @@
-import pickle,re
+import pickle
 from io import BytesIO
 from statistics import mean
 import requests
@@ -9,21 +9,7 @@ curentList = []
 
 import json, os
 import pandas as pd
-from random import randrange
 
-def news():
-    r = requests.get(f'http://72.14.185.11/all/marketCap/down').json()
-    i=randrange(10)
-    s=r[i]["symbol"]
-    l=r[i]
-    # print(r[i].keys())
-    r=r[i]["news"]
-    print(r)
-    x=re.split("title",r)
-    l=re.split("'link': '",r)
-    y=re.split("publisher",x[1])
-    z=re.split("'",y[0])
-    return [z[2],s,l]
 key_l = ['zip', 'sector', 'fullTimeEmployees', 'longBusinessSummary', 'city', 'phone', 'state', 'country',
          'companyOfficers', 'website', 'maxAge', 'address1', 'industry', 'address2', 'ebitdaMargins', 'profitMargins',
          'grossMargins', 'operatingCashflow', 'revenueGrowth', 'operatingMargins', 'ebitda', 'targetLowPrice',
@@ -379,14 +365,13 @@ def sortUniverse():
 
 
 def add_stock(symbol):
-    #  r = requests.get(f'http://72.14.185.11/all/yearReturn/down').json()
-    url = (f'http://72.14.185.11/all/marketCap/up')
+    url = (f'http://127.0.0.1:8000/stocks/all/yearReturn/up')
     myobj = {"symbol": symbol}
     x = requests.post(url, data=myobj)
 
 
-def sortStocks(sector, sortBy="marketCap", dir='up'):
-    r = requests.get(f'http://72.14.185.11/{sector}/{sortBy}/{dir}').json()
+def sortStocks(sector, sortBy, dir='up'):
+    r = requests.get(f'http://127.0.0.1:8000/stocks/{sector}/{sortBy}/{dir}').json()
     keys = []
     vals = []
     ranks = []
@@ -452,28 +437,3 @@ ml2= ['fullTimeEmployees','ebitdaMargins', 'profitMargins',
          'pegRatio', 'ytdReturn', 'forwardPE', 'shortPercentOfFloat' 
           , 'payoutRatio',
          'dividendRate',  'marketCap']
-
-
-def sortSectors(sortBy='marketCap', dir='up',normalize='True'):
-    r = requests.get(f'http://72.14.185.11/sectors/{sortBy}/{dir}').json()
-    print(f'len:{len(r)} r[0]:{r[0]["ave"]}')
-
-
-    keys = []
-    vals = []
-    ranks = []
-    rank = 0
-    for i in range(len(r)):
-        val=r[i]["ave"]
-        sec=r[i]["name"]
-        if val != None:
-            rank += 1
-            keys.append(sec)
-            ranks.append(rank)
-            vals.append(val)
-
-    dictionary = dict(zip(keys, vals))
-    return dictionary
-
-sectorLL = ['Basic Materials', 'Consumer Defensive', 'Healthcare', 'Communication Services', 'Energy','Industrials','Consumer Cyclical', 'Financial Services', 'Technology']
-sectorsDict=dict(zip(sectorList,sectorLL))

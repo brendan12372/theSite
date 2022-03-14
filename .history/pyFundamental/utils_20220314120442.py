@@ -1,4 +1,4 @@
-import pickle,re
+import pickle
 from io import BytesIO
 from statistics import mean
 import requests
@@ -9,21 +9,7 @@ curentList = []
 
 import json, os
 import pandas as pd
-from random import randrange
 
-def news():
-    r = requests.get(f'http://72.14.185.11/all/marketCap/down').json()
-    i=randrange(10)
-    s=r[i]["symbol"]
-    l=r[i]
-    # print(r[i].keys())
-    r=r[i]["news"]
-    print(r)
-    x=re.split("title",r)
-    l=re.split("'link': '",r)
-    y=re.split("publisher",x[1])
-    z=re.split("'",y[0])
-    return [z[2],s,l]
 key_l = ['zip', 'sector', 'fullTimeEmployees', 'longBusinessSummary', 'city', 'phone', 'state', 'country',
          'companyOfficers', 'website', 'maxAge', 'address1', 'industry', 'address2', 'ebitdaMargins', 'profitMargins',
          'grossMargins', 'operatingCashflow', 'revenueGrowth', 'operatingMargins', 'ebitda', 'targetLowPrice',
@@ -182,11 +168,10 @@ class Stock:
         self.filePath = os.path.join(dataDir, self.sector, self.symbol) + '.json'
         self.hist = self.ticker.history(period=p)
         try:
-            self.news = self.ticker.news[0]["title"]
-            self.link=self.ticker.news[0]["link"]
+            self.news = self.ticker.news
             
         except:
-            print(f'err:  {ticker.news}')
+            print(ticker.news)
         try:
             self.yearReturn = round(self.info['52WeekChange'], 2)
         except:
@@ -379,14 +364,13 @@ def sortUniverse():
 
 
 def add_stock(symbol):
-    #  r = requests.get(f'http://72.14.185.11/all/yearReturn/down').json()
-    url = (f'http://72.14.185.11/all/marketCap/up')
+    url = (f'http://127.0.0.1:8000/stocks/all/yearReturn/up')
     myobj = {"symbol": symbol}
     x = requests.post(url, data=myobj)
 
 
-def sortStocks(sector, sortBy="marketCap", dir='up'):
-    r = requests.get(f'http://72.14.185.11/{sector}/{sortBy}/{dir}').json()
+def sortStocks(sector, sortBy, dir='up'):
+    r = requests.get(f'http://127.0.0.1:8000/stocks/{sector}/{sortBy}/{dir}').json()
     keys = []
     vals = []
     ranks = []
@@ -408,72 +392,17 @@ info = {
     "payoutRatio":
         "The payout ratio shows the proportion of earnings a company pays its shareholders in the form of dividends, expressed as a percentage of the company's total earnings. The calculation is derived by dividing the total dividends being paid out by the net income generated."}
 
+headlines=[]
 
-sectorList = ['Basic%20Materials', 'Consumer%20Defensive', 'Healthcare', 'Communication%20Services', 'Energy',
-              'Industrials',
-              'Consumer%20Cyclical', 'Financial%20Services', 'Technology']
+s=Stock('msft')
+print(s.news)
+# headlines=[]
+# links=[]
+# for i in range(len(s.news)):
+#     headlines.append(s.news[i]["title"])
+#     links.append(s.news[i]["link"])
 
-
-ml= ['zip', 'sector', 'fullTimeEmployees', 'longBusinessSummary', 'city', 'phone', 'state', 'country',
-         'companyOfficers', 'website', 'maxAge', 'address1', 'industry', 'address2', 'ebitdaMargins', 'profitMargins',
-         'grossMargins', 'operatingCashflow', 'revenueGrowth', 'operatingMargins', 'ebitda', 'targetLowPrice',
-         'recommendationKey', 'grossProfits', 'freeCashflow', 'targetMedianPrice', 'currentPrice', 'earningsGrowth',
-         'currentRatio', 'returnOnAssets', 'numberOfAnalystOpinions', 'targetMeanPrice', 'debtToEquity',
-         'returnOnEquity', 'targetHighPrice', 'totalCash', 'totalDebt', 'totalRevenue', 'totalCashPerShare',
-         'financialCurrency', 'revenuePerShare', 'quickRatio', 'recommendationMean', 'exchange', 'shortName',
-         'longName', 'exchangeTimezoneName', 'exchangeTimezoneShortName', 'isEsgPopulated', 'gmtOffSetMilliseconds',
-         'quoteType', 'symbol', 'messageBoardId', 'market', 'annualHoldingsTurnover', 'enterpriseToRevenue',
-         'beta3Year', 'enterpriseToEbitda', '52WeekChange', 'morningStarRiskRating', 'forwardEps',
-         'revenueQuarterlyGrowth', 'sharesOutstanding', 'fundInceptionDate', 'annualReportExpenseRatio', 'totalAssets',
-         'bookValue', 'sharesShort', 'sharesPercentSharesOut', 'fundFamily', 'lastFiscalYearEnd',
-         'heldPercentInstitutions', 'netIncomeToCommon', 'trailingEps', 'lastDividendValue', 'SandP52WeekChange',
-         'PriceToBook', 'heldPercentInsiders', 'nextFiscalYearEnd', 'yield', 'mostRecentQuarter', 'shortRatio',
-         'sharesShortPreviousMonthDate', 'floatShares', 'beta', 'enterpriseValue', 'priceHint',
-         'threeYearAverageReturn', 'lastSplitDate', 'lastSplitFactor', 'legalType', 'lastDividendDate',
-         'morningStarOverallRating', 'earningsQuarterlyGrowth', 'priceToSalesTrailing12Months', 'dateShortInterest',
-         'pegRatio', 'ytdReturn', 'forwardPE', 'lastCapGain', 'shortPercentOfFloat', 'sharesShortPriorMonth',
-         'impliedSharesOutstanding', 'category', 'fiveYearAverageReturn', 'previousClose', 'regularMarketOpen',
-         'twoHundredDayAverage', 'trailingAnnualDividendYield', 'payoutRatio', 'volume24Hr', 'regularMarketDayHigh',
-         'navPrice', 'averageDailyVolume10Day', 'regularMarketPreviousClose', 'fiftyDayAverage',
-         'trailingAnnualDividendRate', 'open', 'toCurrency', 'averageVolume10days', 'expireDate', 'algorithm',
-         'dividendRate', 'exDividendDate', 'circulatingSupply', 'startDate', 'regularMarketDayLow', 'currency',
-         'regularMarketVolume', 'lastMarket', 'maxSupply', 'openInterest', 'marketCap', 'volumeAllCurrencies',
-         'strikePrice', 'averageVolume', 'dayLow', 'ask', 'askSize', 'volume', 'fiftyTwoWeekHigh', 'fromCurrency',
-         'fiveYearAvgDividendYield', 'fiftyTwoWeekLow', 'bid', 'tradeable', 'dividendYield', 'bidSize',
-         'regularMarketPrice', 'preMarketPrice', 'logo_url']
-
-ml2= ['fullTimeEmployees','ebitdaMargins', 'profitMargins',
-         'grossMargins', 'operatingCashflow', 'revenueGrowth', 'operatingMargins', 'ebitda', 
-          'grossProfits', 'freeCashflow',
-         'currentRatio',
-         'returnOnEquity', 'totalCash', 'totalRevenue', 'totalCashPerShare','revenuePerShare', 'quickRatio', 'enterpriseToRevenue',
-        'enterpriseToEbitda','bookValue',"PriceToBook", 'floatShares', 'beta','enterpriseValue','trailingPE',
-        'priceToSalesTrailing12Months',
-         'pegRatio', 'ytdReturn', 'forwardPE', 'shortPercentOfFloat' 
-          , 'payoutRatio',
-         'dividendRate',  'marketCap']
+# print(s.news[0])    
 
 
-def sortSectors(sortBy='marketCap', dir='up',normalize='True'):
-    r = requests.get(f'http://72.14.185.11/sectors/{sortBy}/{dir}').json()
-    print(f'len:{len(r)} r[0]:{r[0]["ave"]}')
-
-
-    keys = []
-    vals = []
-    ranks = []
-    rank = 0
-    for i in range(len(r)):
-        val=r[i]["ave"]
-        sec=r[i]["name"]
-        if val != None:
-            rank += 1
-            keys.append(sec)
-            ranks.append(rank)
-            vals.append(val)
-
-    dictionary = dict(zip(keys, vals))
-    return dictionary
-
-sectorLL = ['Basic Materials', 'Consumer Defensive', 'Healthcare', 'Communication Services', 'Energy','Industrials','Consumer Cyclical', 'Financial Services', 'Technology']
-sectorsDict=dict(zip(sectorList,sectorLL))
+# print(headlines)

@@ -26,13 +26,13 @@ REST_FRAMEWORK = {
 INSTALLED_APPS = [
     'rest_framework',
     'stocks.apps.StocksConfig',
+    'stocks.apps.topTen',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'topTen.apps.ToptenConfig',
 ]
 
 MIDDLEWARE = [

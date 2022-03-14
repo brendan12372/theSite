@@ -26,6 +26,7 @@ REST_FRAMEWORK = {
 INSTALLED_APPS = [
     'rest_framework',
     'stocks.apps.StocksConfig',
+    'topTen.apps.topTen',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -12,18 +12,15 @@ import pandas as pd
 from random import randrange
 
 def news():
-    r = requests.get(f'http://72.14.185.11/all/marketCap/down').json()
+    r = requests.get(f'http://72.14.185.11/all/yearReturn/down').json()
     i=randrange(10)
-    s=r[i]["symbol"]
-    l=r[i]
-    # print(r[i].keys())
+    s=r[i]["shortName"]
     r=r[i]["news"]
-    print(r)
+   
     x=re.split("title",r)
-    l=re.split("'link': '",r)
     y=re.split("publisher",x[1])
     z=re.split("'",y[0])
-    return [z[2],s,l]
+    return z[2],s
 key_l = ['zip', 'sector', 'fullTimeEmployees', 'longBusinessSummary', 'city', 'phone', 'state', 'country',
          'companyOfficers', 'website', 'maxAge', 'address1', 'industry', 'address2', 'ebitdaMargins', 'profitMargins',
          'grossMargins', 'operatingCashflow', 'revenueGrowth', 'operatingMargins', 'ebitda', 'targetLowPrice',
@@ -380,13 +377,13 @@ def sortUniverse():
 
 def add_stock(symbol):
     #  r = requests.get(f'http://72.14.185.11/all/yearReturn/down').json()
-    url = (f'http://72.14.185.11/all/marketCap/up')
+    url = (f'http://72.14.185.11/stocks/all/marketCap/up')
     myobj = {"symbol": symbol}
     x = requests.post(url, data=myobj)
 
 
-def sortStocks(sector, sortBy="marketCap", dir='up'):
-    r = requests.get(f'http://72.14.185.11/{sector}/{sortBy}/{dir}').json()
+def sortStocks(sector, sortBy, dir='up'):
+    r = requests.get(f'http://72.14.185.11/stocks/{sector}/{sortBy}/{dir}').json()
     keys = []
     vals = []
     ranks = []

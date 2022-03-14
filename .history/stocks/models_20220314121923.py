@@ -95,7 +95,7 @@ class Stock(models.Model):
     forwardPE=models.FloatField(blank=True,null=True)
     twoHundredDayAverage=models.FloatField(blank=True,default=0,null=True)
     news=models.TextField(blank=True,null=True)
-    link=models.CharField(blank=True,null=True, max_length=200)
+    link=models.models.CharField(blank=True,null=True, max_length=200)
     summary=models.TextField(blank=True,null=True)
     priceToSalesTrailing12Months=models.FloatField(blank=True,null=True,default=0)
     totalDebt=models.IntegerField(blank=True,null=True,default=0)

@@ -95,7 +95,6 @@ class Stock(models.Model):
     forwardPE=models.FloatField(blank=True,null=True)
     twoHundredDayAverage=models.FloatField(blank=True,default=0,null=True)
     news=models.TextField(blank=True,null=True)
-    link=models.CharField(blank=True,null=True, max_length=200)
     summary=models.TextField(blank=True,null=True)
     priceToSalesTrailing12Months=models.FloatField(blank=True,null=True,default=0)
     totalDebt=models.IntegerField(blank=True,null=True,default=0)
@@ -110,7 +109,6 @@ class Stock(models.Model):
         S = St(self.symbol)
         self.sector = S.sector
         self.totalCash=S.info['totalCash']
-        self.link=S.link
         self.priceToSalesTrailing12Months=round(S.info['priceToSalesTrailing12Months'],2)
         self.totalDebt=S.info['totalDebt']
         self.ebitdaMargins=round(S.info['ebitdaMargins'],2)
@@ -162,7 +160,7 @@ class Stock(models.Model):
             self.recommendationMean=S.recommendationMean
         except :
             self.recommendationMean=0
-        self.news=S.news
+        self.news=S.news["title"]
         try:
             self.EbitdaMargins=round(S.info["ebitdaMargins"],2)
         except:

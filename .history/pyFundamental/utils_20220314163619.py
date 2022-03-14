@@ -20,9 +20,11 @@ def news():
     r=r[i]["news"]
     print(r)
     x=re.split("title",r)
-    l=re.split("'link': '",r)
+    l=re.split("'link': '")
+    print(l)
     y=re.split("publisher",x[1])
     z=re.split("'",y[0])
+    print(z[2])
     return [z[2],s,l]
 key_l = ['zip', 'sector', 'fullTimeEmployees', 'longBusinessSummary', 'city', 'phone', 'state', 'country',
          'companyOfficers', 'website', 'maxAge', 'address1', 'industry', 'address2', 'ebitdaMargins', 'profitMargins',

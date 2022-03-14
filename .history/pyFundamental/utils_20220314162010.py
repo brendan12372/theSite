@@ -16,11 +16,10 @@ def news():
     i=randrange(10)
     s=r[i]["symbol"]
     l=r[i]
-    # print(r[i].keys())
+    print(r[i])
     r=r[i]["news"]
-    print(r)
+
     x=re.split("title",r)
-    l=re.split("'link': '",r)
     y=re.split("publisher",x[1])
     z=re.split("'",y[0])
     return [z[2],s,l]
