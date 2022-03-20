@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+{% load static %}
+{% load humanize %}
+
+
+<html lang="en">
+
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'topTen/style.css' %}">
+    <!doctype html>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js">
+        var myCollapseEl = document.getElementById('myCollapse')
+        myCollapseEl.addEventListener('shown.bs.collapse', function(event) {
+            // Action to execute once the collapsible area is expanded
+        })
+
+        var collapseElementList = [].slice.call(document.querySelectorAll('.collapse'))
+        var collapseList = collapseElementList.map(function(collapseEl) {
+            return new bootstrap.Collapse(collapseEl)
+        })
+    </script>
+    <src src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js">
+        </script>
+
+
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-1 bg-secondary text-center">
+                <img src={{ data.logo_url }} style="width: 50px; height:50px">
+            </div>
+            <div class="col border-5">
+                <h3 class="display-3 bg-primary">{{data.shortName}}- {{data.sector}}</h3>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="row">
+                <div class="col">
+                    <table class="table table-bordered table-dark table-sm table-condensed table-responsive">
+
+                        {% for k,v in data.items %}
+
+                        <tr>
+                            {% if v > 100000 %}
+                            <td class="Key">{{k}}</td>
+                            <td>$ {{v| intword}}</td>
+                            {% elif v > 0 %}
+                            <td class="Key">{{k}}</td>
+                            <td>{{v| floatformat:2}}</td>
+                            {%endif%}
+                        </tr>
+
+
+
+
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="col">
+                    <artical>
+                        <p class="lead">{{data.summary}}</p>
+
+
+
+                        </article>
+                </div>
+            </div>
+        </div>
+
+</body>
+
+</html>

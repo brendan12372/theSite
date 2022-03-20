@@ -1,0 +1,20 @@
+<table class="table table-bordered table-dark table-sm">
+    <thead>
+      <tr>
+          <th scope="col">#</th>
+        <th scope="col">Company</th>
+        <th scope="col">{{sortBy}}</th>
+      </tr>
+    </thead>
+  {% for k,v in data.items %}
+      {% if sortBy == "marketCap" %}
+      <tr><td>{{ forloop.counter }}</td><td class="Key">{{k}}</td> <td>$ {{ v|floatformat:2 }}</td> </tr>
+          {% elif sortBy == "yearReturn" %}
+              <tr><td>{{ forloop.counter }}</td><td class="Key">{{k}}</td> <td> {{ v|floatformat:2 }} %</td> </tr>
+          {% else %}
+                      <tr><td>{{ forloop.counter }}</td><td class="Key">{{k}}</td> <td> {{ v|floatformat:2 }}</td> </tr>
+  
+      {% endif %}
+  {% endfor %}
+  </table>
+  </div>
